@@ -24,7 +24,14 @@ const bookController = function(Book) {
                 return res.status(500).send(err);
             }
 
-            res.json(books);
+            const returnBooks = [];
+            books.forEach(function(element, index, array){
+                const newBook = element.toJSON();
+                newBook.links = {};
+                newBook.links.self = 'http://' + req.headers.host + '/api/books/' + newBook._id;
+                returnBooks.push(newBook);
+            });
+            res.json(returnBooks);
         });
     }
 
