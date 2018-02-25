@@ -2,7 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const db = mongoose.connect('mongodb://localhost/bookAPI');
+let db;
+if(process.env.ENV === 'Test') {
+    db = mongoose.connect('mongodb://localhost/bookAPI_test');
+} else {
+    db = mongoose.connect('mongodb://localhost/bookAPI');
+}
 const Book = require('./models/bookModel');
 
 const app = express();
@@ -27,3 +32,5 @@ app.get('/', function(req, res){
 app.listen(port, function() {
     console.log(`Server is up on port ${port}`);
 });
+
+module.exports = app;
