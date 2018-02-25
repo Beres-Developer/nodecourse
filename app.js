@@ -14,7 +14,7 @@ bookRouter.route('/books')
         if(req.query.genre) {
             query.genre = req.query.genre;
         }
-        
+
         Book.find(query, function(err, books){
             if (err) {
                 return res.status(500).send(err);
@@ -23,6 +23,20 @@ bookRouter.route('/books')
             res.json(books);
         });
     });
+
+bookRouter.route('/books/:bookId')
+    .get(function(req, res){
+
+        Book.findById(req.params.bookId, function(err, book){
+            if (err) {
+                return res.status(500).send(err);
+            }
+
+            res.json(book);
+        });
+    });
+
+
 
 
 
